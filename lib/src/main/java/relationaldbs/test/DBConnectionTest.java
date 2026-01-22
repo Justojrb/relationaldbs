@@ -23,23 +23,41 @@ public class DBConnectionTest {
 			// The following SQL statement is used to send the SQL statement to the database
 
 			// table creation sql
-			String createTableSQL = 
-			"create table if not exists users(" + "id integer not null," 
-			+ "usenname VARCHAR(255), " + "psw VARCHAR(255)," + "isVIP TINYINT(1)," + "balance FLOAT,"
+			String createTableSQL = "create table if not exists users(" + "id integer not null,"
+					+ "usenname VARCHAR(255), " + "psw VARCHAR(255)," + "isVIP SMALLINT(1)," + "balance FLOAT,"
 					+ "PRIMARY KEY (id)" + ")";
+
+			PreparedStatement ps = conn.prepareStatement(createTableSQL);
+			ps.executeUpdate();
+
 			// insert sql
-			
+
 			String insertSQL = "insert into users values (10, 'Manolo',"
 					+ " 12343', 1, 234.3), (20, 'Alejandro', '123', 1, 234.3)";
 			
+			 ps = conn.prepareStatement(insertSQL);
+
+			// ps.executeupdate() is used to execute SQL statements that change the database
+			// such as CREATE, INSERT, UPDATE, DELETE statements
+			ps.executeUpdate();
+			ps.close();
+
 			// delete sal
-			
+
 			String deleteSQL = "DELETE FROM users WHERE username = 'Alejandro'";
+			ps = conn.prepareStatement (deleteSQL);
 			// select psw, isVIP from users where username = 'Manolo' ;
-			
+
 			String selectSQL = "select * from users where username = 'Manolo'";
 
 			createDatabase(conn);
+			//eliminate the user table
+			String dropTableSQL = "DROP TABLE users";
+			PreparedStatement ps1
+			= conn.prepareStatement(dropTableSQL);
+			ps1.executeUpdate();
+			ps.close();
+					
 
 		} catch (SQLException e) {
 
@@ -48,7 +66,7 @@ public class DBConnectionTest {
 
 	}
 
-	private static void createDatabase(Connection conn)  {
+	private static void createDatabase(Connection conn) {
 
 		try {
 			String dbCreationSQL = "CREATE DATABASE happylearning";
@@ -59,6 +77,7 @@ public class DBConnectionTest {
 			// ps.executeupdate() is used to execute SQL statements that change the database
 			// such as CREATE, INSERT, UPDATE, DELETE statements
 			ps.executeUpdate();
+			ps.close();
 
 		} catch (SQLException e) {
 
