@@ -19,7 +19,9 @@
 	<appender name="ERROR_FILE"
 		cLass="ch.qos.Logback.core.FileAppender">
 		<file>logs/error.log</file>
-
+		<filter clas= "ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
 		<append>true</append>
 		<encoder>
 			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n

@@ -1,11 +1,17 @@
 package relationaldbs;
 
+
+
 import org.slf4j.LoggerFactory;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 
-
+/**
+ * 
+ *@author Justo
+ *3 mar 2026
+ */
 public class LoggingTest {
 	
 	
@@ -17,6 +23,7 @@ private final static Logger logger = (Logger) LoggerFactory.getLogger(LoggingTes
 //	    Logger.setLeveL(Level.WARN);
 //	    Logger.setLeveL(Level.ERROR);
 		logger.setLevel(Level.INFO);
+		ch.qos.logback.classic.filter.ThresholdFilter filter = new ch.qos.logback.classic.filter.ThresholdFilter();
 		division(20, 0);
 	}
 	
