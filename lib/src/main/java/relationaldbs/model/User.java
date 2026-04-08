@@ -11,8 +11,7 @@ public class User {
 	private String phone;
 	private String address;
 	private String role;
-	private String age;
-	
+	private int age;
 
 	// methods
 	public String getName() {
@@ -34,8 +33,61 @@ public class User {
 	public User() {
 	}
 
+	public long getId() {
+		return id;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setBalance(double balance) {
+		this.balance = balance;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
 	// construtors
-	public User(long id, String name, String password, double balance, String email, String phone, String address, String role, String age ) {
+	public User(long id, String name, String password, double balance, String email, String phone, String address,
+			String role, String age) {
 		this.id = id;
 		this.name = name;
 		this.password = password;
