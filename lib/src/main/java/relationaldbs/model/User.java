@@ -92,6 +92,12 @@ public class User {
 		this.name = name;
 		this.password = password;
 		this.balance = balance;
+		this.email = email;
+		this.phone = phone;
+		this.address = address;
+		this.role = role;
+		this.age = Integer.parseInt(age);
+		
 
 	}
 }
