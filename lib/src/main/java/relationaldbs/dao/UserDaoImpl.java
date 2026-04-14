@@ -12,11 +12,7 @@ import relationaldbs.model.User;
 
 /**
  * 
- * 
- * 
- * @author alex
- * 
- *         10 abr 2026
+ * @author Justo 10 abr 2026
  * 
  */
 
@@ -30,8 +26,6 @@ public class UserDaoImpl implements UserDao {
 
 	private static String password = "Admin";
 
-	@Override
-
 	public boolean insert(User user) {
 
 		String insertSQL = "insert into users(name, password, isVIP, balance)" + "values(?, ?, ?, ?)";
@@ -40,6 +34,11 @@ public class UserDaoImpl implements UserDao {
 				PreparedStatement ps = conn.prepareStatement(insertSQL)) {
 			ps.close();
 			conn.close();
+			ps.executeUpdate();
+			ps.setString(1, user.getName());
+			ps.setString(2, user.getPassword());
+			ps.setDouble(4, user.getBalance());
+			ps.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -49,8 +48,6 @@ public class UserDaoImpl implements UserDao {
 
 	}
 
-	@Override
-
 	public boolean delete(long id) {
 
 		// TODO Auto-generated method stub
@@ -59,15 +56,11 @@ public class UserDaoImpl implements UserDao {
 
 	}
 
-	@Override
-
 	public void update(User user) {
 
 		// TODO Auto-generated method stub
 
 	}
-
-	@Override
 
 	public User find(long id) {
 
@@ -77,8 +70,6 @@ public class UserDaoImpl implements UserDao {
 
 	}
 
-	@Override
-
 	public User findByEmail(String emal) {
 
 		// TODO Auto-generated method stub
@@ -86,8 +77,6 @@ public class UserDaoImpl implements UserDao {
 		return null;
 
 	}
-
-	@Override
 
 	public List<User> findAll() {
 
