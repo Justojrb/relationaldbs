@@ -78,5 +78,17 @@ public class Product {
 	public int setRating() {
 		return rating;
 	}
+	
+	public Product(long id, String name, String description, double price, String category, int stock, String subCategory,
+			int rating) {
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.category = category;
+		this.stock = stock;
+		this.subCategory = subCategory;
+		this.rating = rating;
+	}
 
 }

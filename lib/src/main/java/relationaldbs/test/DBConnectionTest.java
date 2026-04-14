@@ -9,12 +9,9 @@ import java.sql.SQLException;
 public class DBConnectionTest {
 	// The direction of the database that we are going to connect
 	private static String postgresqlURL = "jdbc:postgresql://localhost:5432/postgres?";
-
 	private static String username = "postgres";
 	private static String password = "admin";
-
 	public static void main(String[] args) {
-
 		try {
 			// Obtain a object class "Connection" Which represents a connection with a
 			// specific database

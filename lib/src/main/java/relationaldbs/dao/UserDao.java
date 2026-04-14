@@ -1,61 +1,79 @@
 package relationaldbs.dao;
 
+import java.security.Identity;
+
 import java.util.List;
 
-import com.sun.org.apache.bcel.internal.generic.RETURN;
-
 import relationaldbs.model.User;
+
+/**
+ * 
+ * the inteerface that defines the functionalities to interact with the database
+ * for user related operations
+ * 
+ * @author Justo 10 abr 2026
+ * 
+ */
 
 public interface UserDao {
 
 	/**
-	 * Inserts a new user into the database.
+	 * 
+	 * insert an user object to database
 	 * 
 	 * @param user
-	 * @return true if the user was successfully inserted, false otherwise.
+	 * 
+	 * @return return true if inserted successfully, otherwise false
+	 * 
 	 */
 
 	public boolean insert(User user);
-	
-	String insertSQL = "insert into users values (10, 'Manolo'," + " 12343', 1, 234.3), (20, 'Alejandro', '123', 1, 234.3)";
-	
-	return false;
 
 	/**
-	 * Deletes a user from the database by its id.
+	 * 
+	 * delete an user by id
 	 * 
 	 * @param id
-	 * @return true if the user was successfully deleted, false otherwise.
+	 * 
+	 * @return
+	 * 
 	 */
 
-	public boolean delete(Long id);
+	public boolean delete(long id);
+
+	public void update(User user);
 
 	/**
-	 * update a user data from the database.
+	 * 
+	 * find an user by his id
 	 * 
 	 * @param id
-	 * @return the user with the specified id, or null if no such user exists.
+	 * 
+	 * @return
+	 * 
 	 */
 
-	public User update(User user);
+	public User find(long id);
 
 	/**
-	 * Finds a user in the database by its id.
 	 * 
-	 * @param id
-	 * @return the user with the specified id, or null if no such user exists.
+	 * find an user by his id
+	 * 
+	 * @param emal
+	 * 
+	 * @return
+	 * 
 	 */
 
-	public User findById(Long id);
+	public User findByEmail(String emal);
 
 	/**
-	 * Finds a user in the database by its email.
 	 * 
-	 * @param email
-	 * @return the user with the specified email, or null if no such user exists.
+	 * retrieve all users
+	 * 
+	 * @return a list or users
+	 * 
 	 */
-
-	public User findByEmail(String email);
 
 	public List<User> findAll();
 
