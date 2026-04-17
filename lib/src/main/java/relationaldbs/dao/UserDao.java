@@ -11,7 +11,8 @@ import relationaldbs.model.User;
  * the inteerface that defines the functionalities to interact with the database
  * for user related operations
  * 
- * @author Justo 10 abr 2026
+ * @author Justo 
+ * 10 abr 2026
  * 
  */
 

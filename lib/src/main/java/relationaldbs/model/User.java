@@ -87,7 +87,7 @@ public class User {
 
 	// construtors
 	public User(long id, String name, String password, double balance, String email, String phone, String address,
-			String role, String age) {
+			String role, int age) {
 		this.id = id;
 		this.name = name;
 		this.password = password;
@@ -96,8 +96,13 @@ public class User {
 		this.phone = phone;
 		this.address = address;
 		this.role = role;
-		this.age = Integer.parseInt(age);
+		this.age = age;
 		
 
+	}
+
+	public User(int i, Object object, Object object2, Object object3, Object object4, int j, Object object5,
+			Object object6) {
+		// TODO Auto-generated constructor stub
 	}
 }

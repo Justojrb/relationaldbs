@@ -1,13 +1,10 @@
 package relationaldbs.dao;
 
 import java.sql.Connection;
-
 import java.sql.DriverManager;
-
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
-
 import relationaldbs.model.User;
 
 /**
@@ -18,34 +15,25 @@ import relationaldbs.model.User;
 
 public class UserDaoImpl implements UserDao {
 
-	private final static String postgresqlURL = "jdbc:postgresql://localhost:5432/postgres";
-
-	// "jdbc:postgresql://192.168.1.170.5432/sample?ssl=true";
-
-	private static String username = "postgres";
-
-	private static String password = "Admin";
+	private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
+	private static final String USER = "postgres";
+	private static final String PASSWORD = "admin";
 
 	public boolean insert(User user) {
-
-		String insertSQL = "insert into users(name, password, isVIP, balance)" + "values(?, ?, ?, ?)";
-
-		try (Connection conn = DriverManager.getConnection(postgresqlURL, username, password);
-				PreparedStatement ps = conn.prepareStatement(insertSQL)) {
-			ps.close();
-			conn.close();
-			ps.executeUpdate();
+		String sql = "INSERT INTO users(name, password, isVIP, balance) VALUES(?, ?, ?, ?)";
+		
+		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+				PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, user.getName());
 			ps.setString(2, user.getPassword());
+			ps.setBoolean(3, false);
 			ps.setDouble(4, user.getBalance());
 			ps.executeUpdate();
+			return true;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
-
-		return false;
-
 	}
 
 	public boolean delete(long id) {
