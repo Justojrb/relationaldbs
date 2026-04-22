@@ -1,7 +1,7 @@
 package relationaldbs.test;
 
 import relationaldbs.dao.ProductDaoImpl;
-import relationaldbs.model.User;
+import relationaldbs.model.Product;
 
 public class ProductDaoTest {
 
@@ -9,22 +9,22 @@ public class ProductDaoTest {
 		ProductDaoImpl dao = new ProductDaoImpl();
 		
 		// Insert
-		User user = new User(1, "Juan", "pass123", 1000, "juan@mail.com", "555-1234", "Calle 1", "user", 25);
-		dao.insert(user);
+		Product product = new Product(1, "Laptop", "High-performance laptop", 999.99, "Electronics", 10, "Computers", 4);
+		dao.insert(product);
 		
 		// Find
-		User found = dao.find(1);
+		Product found = dao.find(1);
 		System.out.println("Find: " + (found != null ? found.getName() : "Not found"));
 		
 		// Update
-		user.setName("Juan Updated");
-		dao.update(user);
+		Product updated = new Product(1, "Laptop Pro", "High-performance laptop", 1199.99, "Electronics", 8, "Computers", 5);
+		dao.update(updated);
 		System.out.println("Updated");
 		
 		// Find All
-		System.out.println("Total users: " + dao.findAll().size());
+		System.out.println("Total products: " + dao.findAll().size());
 		
-		// Delete
+		// Delete 
 		dao.delete(1);
 		System.out.println("Deleted");
 	}

@@ -21,6 +21,10 @@ public class Product {
 
 	private int rating;
 
+	public long getId() {
+		return id;
+	}
+
 	public String getName() {
 		return name;
 

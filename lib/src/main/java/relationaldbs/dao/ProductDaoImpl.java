@@ -6,118 +6,172 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-import relationaldbs.model.User;
+import relationaldbs.model.Product;
 
 public class ProductDaoImpl implements ProductDao {
-	private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
-	private static final String USER = "postgres";
-	private static final String PASSWORD = "admin";
 
-	public boolean insert(User user) {
-		String sql = "INSERT INTO users(name, password, isVIP, balance) VALUES(?, ?, ?, ?)";
+    private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
+    private static final String USER = "postgres";
+    private static final String PASSWORD = "admin";
 
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-				PreparedStatement ps = conn.prepareStatement(sql)) {
-			ps.setString(1, user.getName());
-			ps.setString(2, user.getPassword());
-			ps.setBoolean(3, false);
-			ps.setDouble(4, user.getBalance());
-			ps.executeUpdate();
-			return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
+    @Override
+    public boolean insert(Product product) {
+        String sql = "INSERT INTO products(name, description, price, category, stock, subCategory, rating) VALUES(?, ?, ?, ?, ?, ?, ?)";
 
-	public boolean delete(long id) {
-		String sql = "DELETE FROM users WHERE id = ?";
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, product.getName());
+            ps.setString(2, product.getDescription());
+            ps.setDouble(3, product.getPrice());
+            ps.setString(4, product.getCategory());
+            ps.setInt(5, product.getStock());
+            ps.setString(6, product.getSubCategory());
+            ps.setInt(7, product.getRating());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-				PreparedStatement ps = conn.prepareStatement(sql)) {
-			ps.setLong(1, id);
-			ps.executeUpdate();
-			return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
+    @Override
+    public boolean delete(long id) {
+        String sql = "DELETE FROM products WHERE id = ?";
 
-	public void update(User user) {
-		String sql = "UPDATE users SET name = ?, password = ?, balance = ?, email = ?, phone = ?, address = ?, role = ?, age = ? WHERE id = ?";
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setLong(1, id);
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-				PreparedStatement ps = conn.prepareStatement(sql)) {
-			ps.setString(1, user.getName());
-			ps.setString(2, user.getPassword());
-			ps.setDouble(3, user.getBalance());
-			ps.setString(4, user.getEmail());
-			ps.setString(5, user.getPhone());
-			ps.setString(6, user.getAddress());
-			ps.setString(7, user.getRole());
-			ps.setInt(8, user.getAge());
-			ps.setLong(9, user.getId());
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+    @Override
+    public void update(Product product) {
+        String sql = "UPDATE products SET name = ?, description = ?, price = ?, category = ?, stock = ?, subCategory = ?, rating = ? WHERE id = ?";
 
-	public User find(long id) {
-		String sql = "SELECT * FROM users WHERE id = ?";
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, product.getName());
+            ps.setString(2, product.getDescription());
+            ps.setDouble(3, product.getPrice());
+            ps.setString(4, product.getCategory());
+            ps.setInt(5, product.getStock());
+            ps.setString(6, product.getSubCategory());
+            ps.setInt(7, product.getRating());
+            ps.setLong(8, product.getId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-				PreparedStatement ps = conn.prepareStatement(sql)) {
-			ps.setLong(1, id);
-			var rs = ps.executeQuery();
-			if (rs.next()) {
-				User user = new User(rs.getLong("id"), rs.getString("name"), rs.getString("password"),
-				rs.getDouble("balance"), rs.getString("email"), rs.getString("phone"), rs.getString("address"),
-				rs.getString("role"), rs.getInt("age"));
-				return user;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+    @Override
+    public Product find(long id) {
+        String sql = "SELECT * FROM products WHERE id = ?";
 
-	public User findByEmail(String emal) {
-		String sql = "SELECT * FROM users WHERE email = ?";
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setLong(1, id);
+            var rs = ps.executeQuery();
+            if (rs.next()) {
+                Product product = new Product(
+                    rs.getLong("id"),
+                    rs.getString("name"),
+                    rs.getString("description"),
+                    rs.getDouble("price"),
+                    rs.getString("category"),
+                    rs.getInt("stock"),
+                    rs.getString("subCategory"),
+                    rs.getInt("rating")
+                );
+                return product;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-				PreparedStatement ps = conn.prepareStatement(sql)) {
-			ps.setString(1, emal);
-			var rs = ps.executeQuery();
-			if (rs.next()) {
-				User user = new User(rs.getLong("id"), rs.getString("name"), rs.getString("password"),
-				rs.getDouble("balance"), rs.getString("email"), rs.getString("phone"), rs.getString("address"),
-				rs.getString("role"), rs.getInt("age"));
-				return user;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+    @Override
+    public Product findByName(String name) {
+        String sql = "SELECT * FROM products WHERE name = ?";
 
-	public List<User> findAll() {
-		String sql = "SELECT * FROM users";
-		List<User> users = new java.util.ArrayList<>();
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, name);
+            var rs = ps.executeQuery();
+            if (rs.next()) {
+                Product product = new Product(
+                    rs.getLong("id"),
+                    rs.getString("name"),
+                    rs.getString("description"),
+                    rs.getDouble("price"),
+                    rs.getString("category"),
+                    rs.getInt("stock"),
+                    rs.getString("subCategory"),
+                    rs.getInt("rating")
+                );
+                return product;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-				PreparedStatement ps = conn.prepareStatement(sql)) {
-			var rs = ps.executeQuery();
-			while (rs.next()) {
-				User user = new User(rs.getLong("id"), rs.getString("name"), rs.getString("password"),
-				rs.getDouble("balance"), rs.getString("email"), rs.getString("phone"), rs.getString("address"),
-				rs.getString("role"), rs.getInt("age"));
-				users.add(user);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return users;
-	}
+    @Override
+    public List<Product> findAll() {
+        String sql = "SELECT * FROM products";
+        List<Product> products = new java.util.ArrayList<>();
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            var rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product(
+                    rs.getLong("id"),
+                    rs.getString("name"),
+                    rs.getString("description"),
+                    rs.getDouble("price"),
+                    rs.getString("category"),
+                    rs.getInt("stock"),
+                    rs.getString("subCategory"),
+                    rs.getInt("rating")
+                );
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
+
+    // Método main para insertar un producto de ejemplo
+    public static void main(String[] args) {
+        ProductDao dao = new ProductDaoImpl();
+
+        // Crear un producto de ejemplo
+        Product product = new Product(
+            0,                         // id (0 porque la base de datos lo asignará)
+            "Laptop Gamer",
+            "Laptop de alto rendimiento para gaming",
+            1299.99,
+            "Electronics",
+            10,
+            "Computers",
+            5
+        );
+
+        boolean inserted = dao.insert(product);
+        if (inserted) {
+            System.out.println("Producto insertado correctamente.");
+        } else {
+            System.out.println("Error al insertar producto.");
+        }
+    }
 }
