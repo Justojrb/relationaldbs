@@ -13,10 +13,17 @@ public class DBHelper {
 	public final static String password = "admin";
 	
 	
-	public Connection getConnection() throws SQLException {
+	public static Connection getConnection() {
 		
-		return DriverManager.getConnection(mysqlUrl, username, password);
 		
+		
+		try {
+			return DriverManager.getConnection(mysqlUrl, username, password);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 
 }

@@ -8,7 +8,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
 import relationaldbs.model.User;
+import relationaldbs.util.DBHelper;
 
 /**
  * 
@@ -42,7 +44,8 @@ public class UserDaoImpl implements UserDao {
 	public boolean delete(long id) {
 		String sql = "DELETE FROM users WHERE id = ?";
 		
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+		try (
+				Connection conn = DBHelper.getConnection();
 				PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setLong(1, id);
 			ps.executeUpdate();
@@ -56,7 +59,7 @@ public class UserDaoImpl implements UserDao {
 	public void update(User user) {
 		String sql = "UPDATE users SET name = ?, password = ?, balance = ? WHERE id = ?";
 		
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+		try (Connection conn = DBHelper.getConnection();
 				PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, user.getName());
 			ps.setString(2, user.getPassword());

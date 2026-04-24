@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import relationaldbs.model.Product;
+import relationaldbs.util.DBHelper;
 
 public class ProductDaoImpl implements ProductDao {
 
@@ -18,7 +19,8 @@ public class ProductDaoImpl implements ProductDao {
     public boolean insert(Product product) {
         String sql = "INSERT INTO products(name, description, price, category, stock, subCategory, rating) VALUES(?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (
+        		Connection conn = DBHelper.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, product.getName());
             ps.setString(2, product.getDescription());
@@ -39,7 +41,8 @@ public class ProductDaoImpl implements ProductDao {
     public boolean delete(long id) {
         String sql = "DELETE FROM products WHERE id = ?";
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (
+        		Connection conn = DBHelper.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, id);
             ps.executeUpdate();
@@ -54,7 +57,8 @@ public class ProductDaoImpl implements ProductDao {
     public void update(Product product) {
         String sql = "UPDATE products SET name = ?, description = ?, price = ?, category = ?, stock = ?, subCategory = ?, rating = ? WHERE id = ?";
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (
+        		Connection conn = DBHelper.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, product.getName());
             ps.setString(2, product.getDescription());
@@ -74,7 +78,8 @@ public class ProductDaoImpl implements ProductDao {
     public Product find(long id) {
         String sql = "SELECT * FROM products WHERE id = ?";
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (
+        		Connection conn = DBHelper.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, id);
             var rs = ps.executeQuery();
@@ -101,7 +106,8 @@ public class ProductDaoImpl implements ProductDao {
     public Product findByName(String name) {
         String sql = "SELECT * FROM products WHERE name = ?";
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (
+        		Connection conn = DBHelper.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, name);
             var rs = ps.executeQuery();
@@ -129,7 +135,8 @@ public class ProductDaoImpl implements ProductDao {
         String sql = "SELECT * FROM products";
         List<Product> products = new java.util.ArrayList<>();
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (
+        		Connection conn = DBHelper.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             var rs = ps.executeQuery();
             while (rs.next()) {
